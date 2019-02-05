@@ -1,0 +1,42 @@
+<% include ./partials/header %>
+<div class="ui main text container segment top" id="new-page">
+    <div class="ui huge header">Compose new post</div>
+    <form class="ui form" action="/blog" method = "POST">
+        <div class="field">
+            <label>Title</label>
+            <input type="text" name="blog[title]" placeholder = "title">
+        </div>
+        <div class="field">
+            <label>Image</label>
+            <input type="text" name="blog[image]" placeholder = "image">
+        </div>
+        <div class="field">
+            <label>Category</label>
+            <select name="category">
+                <% categories.forEach(function(category){ %>
+                    <option value = "<%= category._id %>"><%= category.name %></option>
+                <% }); %>
+            </select>  
+        </div>
+        <div class="field">
+            <label>Blog Content</label>
+            <textarea id="editor" name="blog[body]"></textarea>
+        </div>
+        <div class="field">
+            <label>Feature Post?</label>
+            <input type="checkbox" name="blog[isFeatured]" value = "1"> 
+            <span><p>By default, your latest post marked as featured will be populated at the top of the 'Blogs' page. If there are no posts marked as featured, the latest post will be featured by default</p></span>
+        </div>
+        <button class="ui icon button" type ="submit">
+             <i class="paper plane outline icon"></i>
+        </button>
+    </form>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+</div>
+<% include ./partials/footer %>

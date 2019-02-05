@@ -1,0 +1,69 @@
+<% include partials/header %>
+
+    <% if(blogs.length == 0){ %>
+        <h1>Check back soon to see what I have to say... </h1>
+    <% } %>
+    
+    <% if(featuredBlogs.length > 0){ %>
+        <div class='ui container featured-blog-container' id='featured'>
+            <div class="ui orange horizontal label" id='label'>Featured</div>
+                <% if(featuredBlogs[0].image){ %>
+                 <img id = 'blog-image' src = '<%= featuredBlogs[0].image %>'>
+                 <% } %>
+            <div class='ui large header' id='featured-title'> 
+                <h1><%=featuredBlogs[0].title%></h1>
+            </div> 
+            <div class='category-box' id='featured-category'>
+                 <% if(featuredBlogs[0].category[0]){ %>
+                    <h2 id = 'category-name'><%=featuredBlogs[0].category[0].name%></h2>
+                <% } %>
+            </div>
+            <div id = 'featured-preview'>
+                <p id='featured-preview-text'> <%- featuredBlogs[0].body.substring(0, 500) %> ... </p>
+            </div>
+            <button class= 'ui button home btn-prim' id='primary-btn'><a href='/blog/<%=featuredBlogs[0]._id%>'>Read Featured Post</a></button>
+        </div>
+    <% }; %>    
+    
+    <!-- Featured Post-->
+    
+    <!-- tags -->
+    <!-- categories -->
+    <!-- search -->
+    
+     
+    <% if (blogs.length > 0) { %>
+        <div class= 'ui left aligned segment' id='all-blogs'>
+            <!--<div class = "ui stackable cards">-->
+            <div class='ui huge header'>
+                <h2>All posts</h2>
+            </div>
+            <div class="ui four column grid">
+                <% blogs.forEach(function(blog){ %>
+                <div class="column">
+                    <div class="ui fluid card">
+                        <a class="image" href="/blog/<%= blog._id %>">
+                            <img src = "<%= blog.image %>">
+                        </a>
+                        <div class= "content">
+                            <div class="header"><%=blog.title %></div>
+                            <div class="meta">
+                                <span class="date"><%= blog.created.toDateString() %></span>
+                            </div>
+                            <div class="description">
+                                 <p><%- blog.body.substring(0, 100) %> . . .</p>
+                            </div>        
+                            <div class="extra content">
+                                <a href="/blog/<%= blog._id %>">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+                <% }) %>
+            </div>
+        </div>
+    <% } %>
+        
+
+<% include partials/footer %>

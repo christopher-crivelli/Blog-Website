@@ -1,0 +1,54 @@
+<% include partials/header %>
+    <div class='ui container featured-blog-container' id='show-title-box'>
+        <!--<div class="ui orange horizontal label" id='label'>Featured</div>-->
+
+        <div class='ui large header' id='featured-title' style='text-align: center'> 
+            <h1><%=blog.title%></h1>
+        </div> 
+        <% if(blog.image){ %>
+            <img class='ui centered image' id='show-image' src = '<%= blog.image %>'>
+        <% } %>    
+        <div class='category-box' id='blog-category'>
+             <% if(blog.category[0]){ %>
+                <h2 id = 'category-name'><%=blog.category[0].name%></h2>
+            <% } %>
+        </div>
+        <div class='ui center aligned header'>
+            <p>Kris Mascolo | <span><%=blog.created.toDateString() %></span>
+        </div>
+    </div>
+    
+    <div class="ui segment" id="show-container" style='width: 600px; margin: 0 auto;'>
+        <div class="right ui rail" style="">
+            <div class="ui sticky" style="width: 272px !important; height: 262.531px !important; left: 163px; padding-top: 75px">
+                <h3 class="ui header">While you're here...</h3>
+                <div class="ui relaxed divided list">
+                    <% allBlogs.forEach(function(blog){  %>
+                        <div class="item">
+                            <i class="large github middle aligned icon"></i>
+                            <div class="content">
+                                <a class="header" href='/blog/<%= blog.id %>'><%= blog.title %></a>
+                                <div class="description"><%= blog.created.toDateString() %></div>
+                            </div>
+                        </div>  
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+        <div class="description" id='stick-here'>
+            <p><%- blog.body %></p>
+        </div>
+        <% if(currentUser) { %>
+            <% if(currentUser.isAdmin === "1"){ %>
+                <a id="show_button" style="display:inline-block; float: left" class="ui basic button" href="/blog/<%=blog._id %>/edit">Edit Post</a> 
+                <form action="/blog/<%=blog._id%>?_method=DELETE" method="POST">
+                    <button id="show_button" class="ui red basic button">Delete</button>
+                </form>
+            <% } %>
+        <% } %>    
+    </div>
+    
+
+  
+
+<% include partials/footer %>

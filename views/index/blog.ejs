@@ -1,0 +1,37 @@
+<div class="js--wp-3 top" id="blog-preview">
+    <!-- SHOW SAMPLE BLOG POSTS --> 
+    <div class="ui left aligned segment" id = "blog-preview-1">
+        <div class="ui text container">
+            <h2 style="padding-bottom: 15px;">My Latest Posts</h2>
+            <% if(blogs.length < 3){ %>
+                <% maxBlogs = blogs.length; %>
+            <% } %>
+            <% for(var i=0; i< maxBlogs; i++){ %>
+                <div class="blog-container">
+                    <div class="ui grid">
+                        <div class="four wide column">
+                            <h3 class="ui header" id="blog-title"><%= blogs[i].title %></h3>
+                        </div>
+                        <div class="ten wide column">
+                            <a class="image" href="/blog/<%= blogs[i]._id %>">
+                                <img id = "blog-image" src = "<%=blogs[i].image %>">
+                            </a> 
+                        </div>        
+                    </div>
+                    <p class="date"><%= blogs[i].created.toDateString() %></p>
+                    <% if(blogs[i].category.name){ %>
+                            <p><%= blogs[i].category[0].name %></p>
+                    <% } %>
+                    <p><%- blogs[i].body.substring(0, 200) %> . . .</p>
+                    <div style="text-align:center;">
+                        <a class="ui large button home" id="read-more" href="/blog/<%= blogs[i]._id %>">Read More</a>
+                    </div>
+                    <hr>
+                </div>
+            <% } %>     
+        </div>
+        <div style="text-align:center">
+            <a class="ui button home btn-sec js--wp-1-buttons" id="secondary-btn" href="/blog" style="margin-top: -1%">View all posts</a>
+        </div>
+    </div>
+</div>
