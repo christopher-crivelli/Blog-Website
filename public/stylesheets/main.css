@@ -205,7 +205,6 @@ nav {
     font-size: 15px;
     margin-top: 40px;
     margin-bottom: -40px;
-    
 }
 
 #featured-preview-text {
@@ -237,6 +236,9 @@ nav {
     margin-top: 10px;
 }
 
+.shape.title {
+    font-size: 24px;
+}
 
 /* BLOG SHOW PAGE */
 

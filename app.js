@@ -26,6 +26,24 @@ mongoose.connect("mongodb://localhost/portfolio", { useNewUrlParser: true });
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 
+// Cloudinary setup 
+var imageFilter = function (req, file, cb) {
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+
+var upload = multer({storage: storage, fileFilter: imageFilter});
+
+var cloudinary = require('cloudinary');
+cloudinary.config({ 
+  cloud_name: 'dqszqcsyv', 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 
 // PASSPORT CONFIGURATION 
 app.use(require("express-session")({
@@ -60,7 +78,7 @@ app.use(function(req, res, next){
 });
 
 // Database Seeding for removing + adding blog posts and portfolios 
-seedDB();
+//seedDB();
 
 // ROUTES
 app.use(indexRoutes);
