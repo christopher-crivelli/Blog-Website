@@ -11,7 +11,7 @@ router.get("/", function(req, res){
         if(err){
             console.log(err);
         } else {
-            res.render("index", {blogs:blogs, maxBlogs: maxBlogs}); 
+            res.render("index", {blogs:blogs, maxBlogs: maxBlogs, page_name: 'index'}); 
         }
     });    
 });

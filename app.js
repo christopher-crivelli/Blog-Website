@@ -12,7 +12,9 @@ var express                 = require("express"),
     User                    = require("./models/user"),
     Comment                 = require("./models/comment"),
     Category                = require("./models/category"),
-    apiRoute                = require("./routes/api");
+    apiRoute                = require("./routes/api"),
+    multer      = require('multer'),
+    dotenv      = require('dotenv').config();
     
 // ROUTES
 var indexRoutes = require("./routes/index"),
@@ -27,6 +29,13 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 
 // Cloudinary setup 
+
+var storage     = multer.diskStorage({
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
+});
+
 var imageFilter = function (req, file, cb) {
     // accept image files only
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
@@ -67,6 +76,7 @@ app.use(function(req, res, next){
         } 
         app.locals.allBlogs = blogs;
     });
+    res.locals.page_name = "";
     Category.find().sort({name:1}).exec(function(err, categories){
       if(err){
           console.log(err);

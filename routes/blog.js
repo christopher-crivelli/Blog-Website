@@ -21,7 +21,7 @@ router.get("/blog", function(req, res){
         if(err){
             console.log(err);
         } else {
-            res.render("blog", {blogs:blogs, featuredBlogs:featuredBlogsList}); 
+            res.render("blog", {blogs:blogs, featuredBlogs:featuredBlogsList, page_name:'blog'}); 
         }
     });    
 });

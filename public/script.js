@@ -18,29 +18,23 @@ $(document).ready(function() {
     //   } )
     //   .catch( error => {
     //       console.error( error );
+    
     // } );
+    
+    window.setInterval(function(){
+      $('.shape').shape('flip up');
+    }, 5000);
 });
 
-$('#profile').ready(function(){
+$('.profile').ready(function(){
   
-    $('.js--wp-1-heading').addClass('animated fadeIn');
+    $('.profile').addClass('animated fadeIn');
 
-    $('#proceed').addClass('animated fadeIn');
-        
-    $('.js--wp-1-img').addClass('animated fadeIn');
-
-    $('.js--wp-1-buttons').addClass('animated fadeIn');
     
     $('.shape').shape();
     
-    var animateTitle = function(){
-      setTimeout(function(){
-        $('.shape').shape('flip up', animateTitle());
-      }, 3000);
-    };
     
-    animateTitle();
+
     
-  
-  
 });
+
