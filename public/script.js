@@ -21,6 +21,7 @@ $(document).ready(function() {
     
     // } );
     
+    
     window.setInterval(function(){
       $('.shape').shape('flip up');
     }, 5000);
@@ -29,12 +30,8 @@ $(document).ready(function() {
 $('.profile').ready(function(){
   
     $('.profile').addClass('animated fadeIn');
-
     
     $('.shape').shape();
-    
-    
-
     
 });
 

@@ -8,7 +8,7 @@
             <div class='ui container featured-blog-container'>
                 <div class="ui orange horizontal label">Featured</div>
                     <% if(featuredBlogs[0].image){ %>
-                     <img id='blog-image' src = '<%= featuredBlogs[0].image %>'>
+                     <img id='blog-image' class="ui medium circular image profile" src = '<%= featuredBlogs[0].image %>'>
                      <% } %>
                 <div class='ui large header blog'> 
                     <h1><%=featuredBlogs[0].title%></h1>
