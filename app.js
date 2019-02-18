@@ -13,8 +13,9 @@ var express                 = require("express"),
     Comment                 = require("./models/comment"),
     Category                = require("./models/category"),
     apiRoute                = require("./routes/api"),
-    multer      = require('multer'),
-    dotenv      = require('dotenv').config();
+    moment                  = require('moment'),
+    multer                  = require('multer'),
+    dotenv                  = require('dotenv').config();
     
 // ROUTES
 var indexRoutes = require("./routes/index"),
@@ -27,6 +28,7 @@ app.set("view engine", "ejs");
 mongoose.connect("mongodb://localhost/portfolio", { useNewUrlParser: true });
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
+app.locals.moment = require('moment');
 
 // Cloudinary setup 
 

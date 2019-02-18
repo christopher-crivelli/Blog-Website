@@ -1,69 +1,49 @@
 <% include partials/header %>
     <div class="ui container blog" id="blog">
         <% if(blogs.length == 0){ %>
-            <h1>Check back soon to see what I have to say... </h1>
+            <div class="come-back">
+                <h1>Check back soon to see what I have to say... </h1>
+            </div>
         <% } %>
         
-        <% if(featuredBlogs.length > 0){ %>
-            <div class='ui container featured-blog-container'>
-                <div class="ui orange horizontal label">Featured</div>
-                    <% if(featuredBlogs[0].image){ %>
-                     <img id='blog-image' class="ui medium circular image profile" src = '<%= featuredBlogs[0].image %>'>
-                     <% } %>
-                <div class='ui large header blog'> 
-                    <h1><%=featuredBlogs[0].title%></h1>
-                </div> 
-                <div class='ui blue horizontal label'>
-                     <% if(featuredBlogs[0].category[0]){ %>
-                        <h2 class='category-name'><%=featuredBlogs[0].category[0].name%></h2>
-                    <% } %>
-                </div>
-                <div id = 'featured-preview'>
-                    <p id='featured-preview-text'> <%- featuredBlogs[0].body.substring(0, 500) %> ... </p>
-                </div>
-                <button class= 'ui button home btn-prim' id='primary-btn'><a href='/blog/<%=featuredBlogs[0]._id%>'>Read Featured Post</a></button>
-            </div>
-        <% }; %>    
-        
-        <!-- Featured Post-->
-        
-        <!-- tags -->
-        <!-- categories -->
-        <!-- search -->
-        
-         
+
+        <h4 class="ui horizontal header divider">All Posts
+        </h4>
+
         <% if (blogs.length > 0) { %>
-            <div class= 'ui left aligned segment'>
-                <!--<div class = "ui stackable cards">-->
-                <div class='ui large header blog'>
-                    <h2>All posts</h2>
+        <div class="ui relaxed divided items">
+            <% blogs.forEach(function(blog){ %>
+            <div class="item">
+                <div class="ui small image">
+                  <img src="<%=blog.image%>">
                 </div>
-                <div class="ui four column grid">
-                    <% blogs.forEach(function(blog){ %>
-                    <div class="column">
-                        <div class="ui fluid card">
-                            <a class="image" href="/blog/<%= blog._id %>">
-                                <img src = "<%= blog.image %>">
-                            </a>
-                            <div class= "content">
-                                <div class="header"><%=blog.title %></div>
-                                <div class="meta">
-                                    <span class="date"><%= blog.created.toDateString() %></span>
-                                </div>
-                                <div class="description">
-                                     <p><%- blog.body.substring(0, 100) %> . . .</p>
-                                </div>        
-                                <div class="extra content">
-                                    <a href="/blog/<%= blog._id %>">Read More</a>
-                                </div>
-                            </div>
+                <div class="content">
+                    <a class="header" href="/blog/<%=blog._id%>"><%= blog.title %></a>
+                    <div class="meta">
+                        <% if(moment().diff(blog.created, 'days') < 3){ %>
+                            <a><%= moment(blog.created).fromNow(); %></a>
+                        <% } else { %>
+                                <a><%= moment(blog.created).format('MMMM Do, YYYY')%></a>
+                        <% }; %>
+                        <!--<a>Category</a>-->
+                    </div>
+                    <div class="description">
+                    <%= blog.body.substring(0, 250) + "..." %>
+                    </div>
+                    <div class="extra">
+                        <a class="ui right floated primary button" href="/blog/<%=blog._id%>">
+                            Read Post<i class="right chevron icon"></i>
+                        </a>
+                        <div class="ui label">
+                          <%= blog.category[0].name %>
                         </div>
                     </div>
-                    <% }) %>
                 </div>
             </div>
-        <% } %>
+            <% }); %>
+        </div>
     </div>
+    <% }; %>
     
         
 

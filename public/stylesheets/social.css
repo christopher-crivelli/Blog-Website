@@ -2,10 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 25%;
+  height: 30%;
   margin-right: 10px;
   position: relative;
-  margin-top: 80px;
 }
 
 .cube {
@@ -19,6 +18,7 @@
   position: relative;
   cursor: pointer;
   transition: background 0.2s;
+  margin-bottom: 15px;
 }
 
 .plus-vertical,
@@ -99,9 +99,6 @@
   transform: translateX(-10px);
 }
 
-#arrow-right {
-  opacity: 0;
-}
 
 /*#arrow-up {*/
 /*  background: #38A1F3;*/

@@ -1,37 +1,14 @@
-// JQUERY 
-$(document).ready(function() {
+// JQUERY
 
-    // $('.slider').glide({
-    //   autoplay: false,
-    //   arrowsWrapperClass: 'slider-arrows',
-    //   arrowRightText: '',
-    //   arrowLeftText: ''
-    // });
-    
-    
-    //const ClassicEditor = require( '@ckeditor/ckeditor5-build-classic' );
-    
-    // ClassicEditor
-    //   .create( document.querySelector( '#editor' ) )
-    //   .then( editor => {
-    //       console.log( editor );
-    //   } )
-    //   .catch( error => {
-    //       console.error( error );
-    
-    // } );
-    
+$(document).ready(function() {
     
     window.setInterval(function(){
       $('.shape').shape('flip up');
-    }, 5000);
-});
-
-$('.profile').ready(function(){
-  
+    }, 2500);
+    
     $('.profile').addClass('animated fadeIn');
-    
-    $('.shape').shape();
+    $('.shape').shape(); 
+    $('.menu .item').tab();
+    $('.ui.menu').find('.item').tab('change tab', 'first');
     
 });
-
