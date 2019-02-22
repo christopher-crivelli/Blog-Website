@@ -1,31 +1,29 @@
 var express     = require("express");
 var router      = express.Router();
-
 var passport    = require("passport");
 var Blog = require("../models/blog");
 var User = require("../models/user");
+var middleware = require("../middleware");
 
 router.get("/", function(req, res){
-    var maxBlogs = 3;
     Blog.find().sort({created: -1}).exec(function(err, blogs){
         if(err){
             console.log(err);
         } else {
-            res.render("index", {blogs:blogs, maxBlogs: maxBlogs, page_name: 'index'}); 
+            res.render("index", {blogs:blogs, page_name: 'index'}); 
         }
     });    
 });
 
 router.get("/login", function(req, res){
-    var error = null;
-    res.render("login", {error:error}); 
+    res.render("login", {page_name: "login"}); 
 });
 
 router.post("/login", function(req, res){
     passport.authenticate('local', function(err, user, info) {
     if (err) {
         console.log(err);
-        res.render("login", {error:err.message})
+        res.render("login")
     }
     if (!user) { 
         return res.redirect('/login'); 
@@ -33,7 +31,7 @@ router.post("/login", function(req, res){
     req.logIn(user, function(err) {
         if (err) { 
             console.log(err);
-            res.render("login", {error:err.message}); 
+            res.render("login", {page_name: 'login'}); 
         }
         return res.redirect('/blog');
     });
@@ -45,9 +43,7 @@ router.post("/register", function(req,res){
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             console.log(err);
-            var error = err.message;
-            return res.send(error);
-            //return res.render("register", {error:error});
+            return res.render("register");
         }
         newUser.isAdmin = req.body.isAdmin;
         newUser.save();
@@ -62,22 +58,5 @@ router.get("/logout", function(req, res){
     req.logout();
     res.redirect("/blog");
 });
-
-// Checks if user is logged in 
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
-
-// Checks if user is an admin user 
-function isAdmin(req, res, next){
-    if(req.isAuthenticated() && req.user.isAdmin ==="1"){
-            return next();
-    }
-    res.send("User Not Authorized")
-    //res.redirect("/blog");
-}
 
 module.exports = router;

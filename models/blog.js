@@ -24,7 +24,12 @@ var blogSchema = new mongoose.Schema({
         default: "0"
     },
     created: 
-        {type: Date, default: Date.now}
+        {type: Date, default: Date.now}, 
+        
+    likes: {
+        type: Number,
+        default: 0  
+    }
 })   
 
 module.exports = mongoose.model("Blog", blogSchema);

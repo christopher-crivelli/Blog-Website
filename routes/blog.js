@@ -4,6 +4,7 @@ var Blog = require("../models/blog");
 var User = require("../models/user");
 var Category = require("../models/category");
 var featuredBlogsList = [];
+var middleware = require("../middleware");
 
 var getFeaturedBlogs = function(){
     Blog.find({"isFeatured": "1"}).sort({created: -1}).exec(function (err, featuredBlogs){
@@ -27,7 +28,7 @@ router.get("/blog", function(req, res){
 });
 
 // New blog template
-router.get("/blog/new", function(req, res){
+router.get("/blog/new", middleware.isAdmin, function(req, res){
     // gets all category tags and render the new blog template
     Category.find().sort({name: 1}).exec(function(err, categories){
         res.render("new", {categories:categories});
@@ -35,13 +36,11 @@ router.get("/blog/new", function(req, res){
 });
 
 // Create new blog 
-router.post("/blog", isAdmin, function(req, res){
-    console.log(req.body.blog);
+router.post("/blog", middleware.isAdmin, function(req, res){
     //req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.create(req.body.blog, function(err, newBlog){
         if(err){
-            res.send(err);
-            //res.render("new");
+            res.render("new");
         } else {
             console.log(req.body);
             Category.findById(req.body.category, function(err, foundCategory){
@@ -63,13 +62,13 @@ router.get("/blog/:id", function(req, res){
       if(err){
           res.redirect("/blog");
       } else {
-          res.render("show", {blog: foundBlog});
+          res.render("show", {blog: foundBlog, page_name:'blog'});
       }
    });
 });
 
 // DELETE BLOG 
-router.delete("/blog/:id", isAdmin, function(req, res){
+router.delete("/blog/:id", middleware.isAdmin, function(req, res){
     Blog.findByIdAndRemove(req.params.id, function(err, foundBlog){
         if(err){
             console.log(err);
@@ -81,14 +80,7 @@ router.delete("/blog/:id", isAdmin, function(req, res){
 });
 
 // EDIT ROUTE
-router.get("/blog/:id/edit", isAdmin, function(req,res){
-    var categories;
-    Category.find().sort({name: 1}).exec(function(err, foundCategories){
-        if(err){
-            console.log(err);
-        }
-        categories = foundCategories;
-    });
+router.get("/blog/:id/edit", middleware.isAdmin, function(req,res){
     Blog.findById(req.params.id, function(err, foundBlog){
         if(err){
             res.redirect("/blog");
@@ -110,22 +102,14 @@ router.put("/blog/:id", function(req, res){
     });
 });
 
-// Checks if user is logged in 
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
-
-// Checks if user is an admin user 
-function isAdmin(req, res, next){
-    if(req.isAuthenticated() && req.user.isAdmin ==="1"){
-            return next();
-    }
-    res.render("login", {error: "You must be an admin user to do that."});
-}
-
-
+// LIKE BLOG 
+router.post("/blog/:id/like", function(req, res){
+   Blog.update({_id: req.params.id}, {$inc: {likes: 1}}, {}, (err, numberAffected) => {
+        if(err){
+            console.log(err);
+        }    
+        res.send('');
+    });
+});
 
 module.exports = router;

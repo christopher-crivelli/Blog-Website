@@ -10,7 +10,7 @@ f77754 - Orange
 
 html, body {
     background: #fbf9f4;
-    color: #5F6A6E;
+    color: #3A001E;
 }
 
 .ui.header {
@@ -22,7 +22,7 @@ h1, h2, h3, h4, p, li, ul, .ui.menu {
 }
 
 hr {
-    margin: 0 15%;
+    margin: 5% 15%;
     color: rgba(200, 200, 200, .5);
 }
 
@@ -154,21 +154,107 @@ nav .ui.secondary.menu .item:hover{
     color: white;
 }
 
-/* BLOG SHOW PAGE */
-
-#show-image { 
-    width: 400px;
-    height: auto;
-    border-radius: 50px;
+.ui.primary.button {
+    background-color: #006CBF;
+    transition: all .5s;
 }
 
-#show-title-box {
-    margin: 0;
-    margin-bottom: 50px;
-    padding: 5%;
-     background: #ffeeee; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #ffeeee, #ddefbb); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #ffeeee, #ddefbb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+.ui.primary.button:hover{
+    background-color: #45557A;
+}
+
+.ui.relaxed.divided.items .item {
+    transition: all .5s;
+}
+
+.ui.relaxed.divided.items .item:hover{
+    transform: scale(1.01);
+}
+
+.ui.heart.rating .icon {
+    color: red;
+}
+
+.item .content .header, .description {
+    color: #3A001E ;
+}
+
+.ui.horizontal.header.divider {
+    color: #f77754 ;
+}
+
+
+#delete, #edit {
+
+    background: none;
+    box-shadow: none;
+    transition: all .5s;
+}
+
+#delete {
+    border: 1px solid #f77754;
+    color: #f77754;
+}
+
+#edit {
+    border: 1px solid #DF607A;
+    color: #DF607A;
+}
+
+.extra {
+    text-align: right;
+    width: 50%;
+}
+
+.ui.relaxed.divided.items .admin-buttons {
+    display: none;
+}
+
+.ui.relaxed.divided.items .item:hover .admin-buttons {
+    display: inline-block;
+}
+
+.delete-form {
+    float: right;
+}
+
+/* BLOG SHOW PAGE */
+.show .image {
+    margin: 15px;
+}
+
+.ui.labeled.icon.menu .item>.icon:not(.dropdown) {
+    font-size: 36px!important;
+}
+
+.sticky .ui.labeled.icon.menu .item {
+    transition: .6s;
+    z-index:9999;
+}
+
+.sticky .ui.labeled.icon.menu .item:hover {
+    transform: scale(1.05);
+    background: none;
+}
+
+.ui.labeled.icon.menu {
+    border: none;
+    background: none;
+    box-shadow:none;
+}
+
+.ui.container.share {
+    margin-top: 25px;
+}
+
+.meta .date {
+    border-right: .5px solid #bababa;
+    padding-right: 10px;
+    color: #5F6A6E ;
+}
+
+.meta .label{
+    margin-left: 10px;
 }
 
 /* NEW BLOG PAGE */
@@ -181,6 +267,8 @@ nav .ui.secondary.menu .item:hover{
 .ui.animated.button {
     position:static ;
 }
+
+
 
 .button.home {
     margin-top: 5%;
@@ -201,12 +289,7 @@ a.ui.button.home.blog {
     color: #2b2726;
 }
 
-#read-more {
-    margin-bottom: 2.5%;
-    color: #2980B9 !important;
-    border: .2px solid #2980B9;
-    transition: .4s;
-}
+
 
 /* ANIMATIONS */
 .js--wp-2-content {

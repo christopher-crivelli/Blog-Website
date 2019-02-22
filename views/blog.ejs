@@ -1,12 +1,11 @@
 <% include partials/header %>
-    <div class="ui container blog" id="blog">
+    <div class="ui container">
         <% if(blogs.length == 0){ %>
             <div class="come-back">
                 <h1>Check back soon to see what I have to say... </h1>
             </div>
         <% } %>
         
-
         <h4 class="ui horizontal header divider">All Posts
         </h4>
 
@@ -15,36 +14,49 @@
             <% blogs.forEach(function(blog){ %>
             <div class="item">
                 <div class="ui small image">
-                  <img src="<%=blog.image%>">
+                    <img src="<%=blog.image%>">
                 </div>
                 <div class="content">
                     <a class="header" href="/blog/<%=blog._id%>"><%= blog.title %></a>
                     <div class="meta">
-                        <% if(moment().diff(blog.created, 'days') < 3){ %>
+                        <div class="ui label">
+                          <%= blog.category[0].name %>
+                        </div>
+                        <% if(moment().diff(blog.created, 'days') < 5){ %>
                             <a><%= moment(blog.created).fromNow(); %></a>
                         <% } else { %>
                                 <a><%= moment(blog.created).format('MMMM Do, YYYY')%></a>
                         <% }; %>
-                        <!--<a>Category</a>-->
+                        <% if(blog.likes > 0) { %>
+                        <div class="ui heart rating" data-max-rating="1" data-rating="0"><%= blog.likes %><i class="icon"></i></div>
+                        <% }; %>
+                        
                     </div>
                     <div class="description">
-                    <%= blog.body.substring(0, 250) + "..." %>
+                    <% if (blog.body.length > 250) { %>    
+                        <%- blog.body.substring(0, 250) + "..." %>
+                    <% } else { %>
+                        <%- blog.body %>
+                    <% } %> 
                     </div>
+                    
                     <div class="extra">
-                        <a class="ui right floated primary button" href="/blog/<%=blog._id%>">
+                        <a class="ui primary button" href="/blog/<%=blog._id%>">
                             Read Post<i class="right chevron icon"></i>
                         </a>
-                        <div class="ui label">
-                          <%= blog.category[0].name %>
+                        <% if (currentUser && currentUser.isAdmin) { %> 
+                        <div class="admin-buttons">
+                            <a class="ui primary button" id="edit" href="/blog/<%=blog._id%>/edit">Edit</a>
+                            <form method="POST" action="/blog/<%=blog._id%>?_method=DELETE" class="delete-form">
+                            <button class="ui primary button" id="delete">Delete Post</button>
+                            </form>
                         </div>
+                        <% }; %>
                     </div>
                 </div>
             </div>
             <% }); %>
         </div>
-    </div>
     <% }; %>
-    
-        
-
+    </div>
 <% include partials/footer %>

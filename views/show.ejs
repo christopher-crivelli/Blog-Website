@@ -1,6 +1,81 @@
 <% include partials/header %>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '538706109982813',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v3.2'
+    });
     
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+    <div class="ui grid container show">
+        <div class="ui sixteen wide column center aligned">
+            <h1><%=blog.title %></h1>
+            <div class="content">
+                <div class="meta">
+                    <% if(moment().diff(blog.created, 'days') < 5){ %>
+                        <a class="date"><%= moment(blog.created).fromNow(); %></a>
+                    <% } else { %>
+                            <a class="date"><%= moment(blog.created).format('MMMM Do, YYYY')%></a>
+                    <% }; %>
+                    
+                    <div class="ui label">
+                          <%= blog.category[0].name %>
+                    </div>
+                </div>
+                <div class="ui middle aligned big image">
+                    <img src="<%=blog.image%>">
+                </div>
+            </div>
+        </div>
+        
+        <div class="ui three wide column"></div>
+        <div class="ui ten wide column" id="example1">
+            <div class="right ui rail" id="rail">
+                <div class="ui sticky">
+                    <div class="ui header">Right menu content</div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="description">
+                    <%- blog.body %>
+                    <hr>
+                    <div class="ui center aligned container share">
+                        <div class="ui header">Share this post: </div>
+                        <div class="ui compact labeled icon menu ">
+                            <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                                <a class="item a2a_button_facebook" id="facebook" >
+                                    <i class="facebook square icon" style="color:#3b5998"></i>
+                                </a>
+                                <a class="item a2a_button_twitter">
+                                    <i class="twitter square icon" style="color: #38A1F3"></i>
+                                </a>
+                                <a class="item a2a_button_linkedin">
+                                    <i class="linkedin icon" style="color:#0077B5"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="ui three wide column">
+            
+        </div>
+    </div>
     
+
     
 
   

@@ -1,13 +1,12 @@
 <% include partials/header %> 
 
-<div class="ui middle aligned center aligned grid" style = 
+<div class="ui center aligned grid" style = 
     "height: 100vh;
     width: 50vh;
     justify-content: center;
     margin: 0 auto;">
   <div class="column">
     <h2 class="ui teal image header">
-      <!--<img src="assets/images/ class="image">-->
       <div class="content">
         Log-in to your account
       </div>
@@ -27,15 +26,8 @@
               </div>
             </div>
             <button class="ui fluid large teal submit button">Login</button>
-        </div>
-    <% if(error){ %>    
-        <div class="ui error message" style="display: block"> <%=error%></div>
-    <% } %>
+        </div> 
     </form>
-
-    <!--<div class="ui message">-->
-      <!--New to us? <a href="#">Sign Up</a>-->
-    <!--</div>-->
   </div>
 </div>
 

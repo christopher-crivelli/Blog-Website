@@ -98,23 +98,6 @@ app.use(blogRoutes);
 app.use(portfolioRoutes);
 app.use("/api", apiRoute); 
 
-
-// Checks if user is logged in 
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
-
-// Checks if user is an admin user 
-function isAdmin(req, res, next){
-    if(req.isAuthenticated() && req.user.isAdmin ==="1"){
-            return next();
-    }
-    //res.redirect("/blog");
-}
-
 // SET UP SERVER
 app.listen(process.env.PORT, process.env.IP, function(){
    console.log("Kris' Portfolio is running!"); 

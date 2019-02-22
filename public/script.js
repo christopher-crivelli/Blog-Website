@@ -1,9 +1,14 @@
 // JQUERY
 
 $(document).ready(function() {
+    $('#sticky').sticky({
+      context: "#example1"
+    });
     
     window.setInterval(function(){
-      $('.shape').shape('flip up');
+      if ( document.hasFocus()){
+        $('.shape').shape('flip up');
+      }
     }, 2500);
     
     $('.profile').addClass('animated fadeIn');
