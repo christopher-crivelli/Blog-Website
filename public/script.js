@@ -41,7 +41,7 @@ $(document).ready(function() {
   	  var settings = {
         "async": true,
         "crossDomain": true,
-        "url": "https://webdevbootcamp-ccrivelli.c9users.io/api/email",
+        "url": "/api/email",
         "method": "POST",
         "headers": {
           "Content-Type": "application/x-www-form-urlencoded",
