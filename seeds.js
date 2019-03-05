@@ -42,11 +42,11 @@ var categoryData = [
 ]
 
 function seedDB(){
-    removeCollection(Blog);
-    removeCollection(Category);
+    // removeCollection(Blog);
+    // removeCollection(Category);
     addCategories();
-    addBlogs();
-    addBlogs();
+    // addBlogs();
+    // addBlogs();
 }
 
 function removeCollection(col){
