@@ -1,26 +1,7 @@
 <% include partials/header %>
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId            : '538706109982813',
-      autoLogAppEvents : true,
-      xfbml            : true,
-      version          : 'v3.2'
-    });
-    
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
-
-
     <div class="ui grid container show">
         <div class="ui sixteen wide column center aligned">
-            <h1><%=blog.title %></h1>
+            <h1 class="blog-show-title"><%=blog.title %></h1>
             <div class="content">
                 <div class="meta">
                     <% if(moment().diff(blog.created, 'days') < 5){ %>
@@ -38,14 +19,13 @@
                 </div>
             </div>
         </div>
-        
         <div class="ui three wide column"></div>
         <div class="ui ten wide column" id="example1">
-            <div class="right ui rail" id="rail">
-                <div class="ui sticky">
-                    <div class="ui header">Right menu content</div>
-                </div>
-            </div>
+            <!--<div class="right ui rail" id="rail">-->
+            <!--    <div class="ui sticky">-->
+            <!--        <div class="ui header">Right menu content</div>-->
+            <!--    </div>-->
+            <!--</div>-->
             <div class="content">
                 <div class="description">
                     <%- blog.body %>
@@ -66,8 +46,50 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
+            </div>
+            <div class="ui comments">
+                <h3 class="ui dividing header">Comments</h3>
+                <% blog.comments.forEach(function(comment){ %>
+                    <div class="comment">
+                        <!--<a class="avatar">-->
+                        <!--<img src="/images/avatar/small/matt.jpg">-->
+                        <!--</a>-->
+                        <div class="content">
+                            <span class="author"><%= comment.author.username %></span>
+                            <div class="metadata">
+                                <span class="date">
+                                <% if(moment().diff(comment.created, 'days') < 1){ %>
+                                    <a><%= moment(comment.created).fromNow(); %></a>
+                                <% } else { %>
+                                        <a><%= moment(comment.created).format('MMMM Do, YYYY')%></a>
+                                <% }; %>    
+                                </span>
+                            </div>
+                            <div class="text">
+                                <%= comment.text %>
+                            </div>
+                            <div class="actions">
+                                <!--<a class="reply">Reply</a>-->
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+                
+                <% if(currentUser){ %>
+                <form class="ui reply form" method="POST" action="/blog/<%=blog._id%>/comments"> 
+                    <div class="field">
+                        <textarea type="text" placeholder="Write a comment..." name="comment[text]"></textarea>
+                    </div>
+                    <button class="ui blue labeled submit icon button">
+                        <i class="icon edit"></i> Add Comment
+                    </button>
+                </form>
+                <% } else { %>
+                    <div class="login">
+                        <h4><a href="/login">Log in</a> to leave a comment!</h4>
+                    </div>
+                <% }; %>
             </div>
         </div>
         <div class="ui three wide column">

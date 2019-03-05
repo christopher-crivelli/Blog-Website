@@ -1,15 +1,32 @@
 <% include partials/header %>
     <div class="ui container">
-        <% if(blogs.length == 0){ %>
-            <div class="come-back">
-                <h1>Check back soon to see what I have to say... </h1>
-            </div>
-        <% } %>
         
-        <h4 class="ui horizontal header divider">All Posts
-        </h4>
+        <% if(currentUser && currentUser.isAdmin){ %>
+        <h4 class="ui horizontal header divider">Blog Admin Tools</h4>
+            <div class="blog-admin">
+                <a class="ui primary orange button" href="/blog/new">New Post</a>
+            </div>
+        <% }; %>
+        
+        <% if(blogs.length == 0){ %>
+            <div class="no-blogs">
+                <div class="three col">
+                    <div class="loader" id="loader-2">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="come-back">
+                    <h2>Blogging in progress . . .</h2>
+                </div>
+            </div>
+            
+        <% } %>
 
         <% if (blogs.length > 0) { %>
+        <h4 class="ui horizontal header divider">All Posts
+        </h4>
         <div class="ui relaxed divided items">
             <% blogs.forEach(function(blog){ %>
             <div class="item">
@@ -33,15 +50,17 @@
                         
                     </div>
                     <div class="description">
-                    <% if (blog.body.length > 250) { %>    
-                        <%- blog.body.substring(0, 250) + "..." %>
+                    <% if (blog.body.length > 550) { %>  
+                        <div class="blog-preview">
+                            <%- blog.body.substring(0, 550) + ". . ." %>
+                        </div>
                     <% } else { %>
                         <%- blog.body %>
                     <% } %> 
                     </div>
                     
                     <div class="extra">
-                        <a class="ui primary button" href="/blog/<%=blog._id%>">
+                        <a class="ui primary button" id="read-more" href="/blog/<%=blog._id%>">
                             Read Post<i class="right chevron icon"></i>
                         </a>
                         <% if (currentUser && currentUser.isAdmin) { %> 

@@ -14,46 +14,22 @@ var express                 = require("express"),
     Category                = require("./models/category"),
     apiRoute                = require("./routes/api"),
     moment                  = require('moment'),
-    multer                  = require('multer'),
-    dotenv                  = require('dotenv').config();
+    dotenv                  = require('dotenv').config(),
+    flash                   = require('connect-flash');
     
 // ROUTES
 var indexRoutes = require("./routes/index"),
     blogRoutes  = require("./routes/blog"),
-    portfolioRoutes = require("./routes/portfolio");
+    commentRoutes = require("./routes/comment");
     
 // APP SETUP
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
-mongoose.connect("mongodb://localhost/portfolio", { useNewUrlParser: true });
+mongoose.connect("mongodb://kris:password1@ds129004.mlab.com:29004/portfolio", { useNewUrlParser: true });
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.locals.moment = require('moment');
-
-// Cloudinary setup 
-
-var storage     = multer.diskStorage({
-  filename: function(req, file, callback) {
-    callback(null, Date.now() + file.originalname);
-  }
-});
-
-var imageFilter = function (req, file, cb) {
-    // accept image files only
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
-        return cb(new Error('Only image files are allowed!'), false);
-    }
-    cb(null, true);
-};
-
-var upload = multer({storage: storage, fileFilter: imageFilter});
-
-var cloudinary = require('cloudinary');
-cloudinary.config({ 
-  cloud_name: 'dqszqcsyv', 
-  api_key: process.env.CLOUDINARY_API_KEY, 
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});
+app.use(flash());
 
 
 // PASSPORT CONFIGURATION 
@@ -72,6 +48,8 @@ passport.deserializeUser(User.deserializeUser());
 // Sends user information with all routes 
 app.use(function(req, res, next){
     res.locals.currentUser = req.user; 
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     Blog.find().sort({created: -1}).exec(function(err, blogs){
         if(err){
             console.log(err);
@@ -90,13 +68,17 @@ app.use(function(req, res, next){
 });
 
 // Database Seeding for removing + adding blog posts and portfolios 
-//seedDB();
+// seedDB();
 
 // ROUTES
 app.use(indexRoutes);
 app.use(blogRoutes);
-app.use(portfolioRoutes);
 app.use("/api", apiRoute); 
+app.use("/blog/:id/comments", commentRoutes);
+
+app.get('*', function(req, res){
+    res.render('404');
+})
 
 // SET UP SERVER
 app.listen(process.env.PORT, process.env.IP, function(){

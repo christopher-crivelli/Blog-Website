@@ -4,14 +4,19 @@
     "height: 100vh;
     width: 50vh;
     justify-content: center;
-    margin: 0 auto;">
+    margin: 25px auto;">
   <div class="column">
-    <h2 class="ui teal image header">
+    <h2 class="ui image header login-header">
       <div class="content">
-        Log-in to your account
+        Login or register to comment 
       </div>
     </h2>
-    <form class="ui large form" action = "/login" method = "POST">
+    <div class="ui top attached tabular menu login-menu">
+      <a class="item login-item active" data-tab="first">Login</a>
+      <a class="item login-item" data-tab="second">Register</a>
+    </div>
+    <div class="ui bottom attached tab segment active" data-tab="first">
+      <form class="ui large form" action = "/login" method = "POST">
         <div class="ui stacked segment">
             <div class="field">
               <div class="ui left icon input">
@@ -25,9 +30,35 @@
                 <input type="password" name="password" placeholder="Password">
               </div>
             </div>
-            <button class="ui fluid large teal submit button">Login</button>
+            <button class="ui fluid primary large button">Login</button>
         </div> 
     </form>
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="second">
+      <form class="ui large form" action = "/register" method = "POST">
+        <div class="ui stacked segment">
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="user icon"></i>
+                <input type="text" name="username" placeholder="Username">
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="mail icon"></i>
+                <input type="Email" name="email" placeholder="Email">
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="lock icon"></i>
+                <input type="password" name="password" placeholder="Password">
+              </div>
+            </div>
+            <button class="ui fluid primary large button button-register">Register</button>
+        </div> 
+      </form>
+    </div>
   </div>
 </div>
 
