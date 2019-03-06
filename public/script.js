@@ -16,7 +16,6 @@ $(document).ready(function() {
     }
   }, 2500);
   
-  
   // Sign up for emails button  
   $(".cta span").click(function(){
   	$(".cta:not(.sent)").addClass("active");
