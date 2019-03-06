@@ -138,9 +138,16 @@ router.put("/blog/:id", function(req, res){
         if(err){
             res.redirect("/blog");
         } else {
+            Category.findById(req.body.category, function(err, foundCategory){
+                    if(err){
+                        console.log(err);
+                    }
+                    updatedBlog.category = [];
+                    updatedBlog.category.push(foundCategory);
+                    updatedBlog.save();
             res.redirect("/blog/" + req.params.id);
+            });
         }
     });
 });
-
 module.exports = router;
