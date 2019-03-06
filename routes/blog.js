@@ -121,15 +121,17 @@ router.get("/blog/:id/edit", middleware.isAdmin, function(req,res){
             console.log(err);
         } 
         foundCategories = categories;
-    });
-    Blog.findById(req.params.id, function(err, foundBlog){
-        if(err){
-            res.redirect("/blog");
-        } else {
-            res.render("edit", {blog: foundBlog, categories: foundCategories});
-        }
+        Blog.findById(req.params.id, function(err, foundBlog){
+            if(err){
+                res.redirect("/blog");
+            } else {
+                res.render("edit", {blog: foundBlog, categories: foundCategories});
+            }
+        });
     });
 });
+    
+    
 
 // UPDATE ROUTE
 router.put("/blog/:id", function(req, res){
