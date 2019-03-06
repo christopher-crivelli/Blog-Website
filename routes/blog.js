@@ -115,11 +115,18 @@ router.delete("/blog/:id", middleware.isAdmin, function(req, res){
 
 // EDIT ROUTE
 router.get("/blog/:id/edit", middleware.isAdmin, function(req,res){
+    var foundCategories; 
+    Category.find().sort({name: 1}).exec(function(err, categories){
+        if(err){
+            console.log(err);
+        } 
+        foundCategories = categories;
+    });
     Blog.findById(req.params.id, function(err, foundBlog){
         if(err){
             res.redirect("/blog");
         } else {
-            res.render("edit", {blog: foundBlog});
+            res.render("edit", {blog: foundBlog, categories: foundCategories});
         }
     });
 });
