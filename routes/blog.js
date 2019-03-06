@@ -9,6 +9,7 @@ var Comment = require("../models/comment");
 var multer = require('multer');
 var dotenv = require('dotenv').config;
 
+// setup storage, cloudinary for image uploads 
 var storage     = multer.diskStorage({
   filename: function(req, file, callback) {
     callback(null, Date.now() + file.originalname);
@@ -32,24 +33,13 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-
-var getFeaturedBlogs = function(){
-    Blog.find({"isFeatured": "1"}).sort({created: -1}).exec(function (err, featuredBlogs){
-        if(err){
-            console.log(err);
-        } else {
-            featuredBlogsList = featuredBlogs; 
-        }
-    });
-};
-
+// Loads the blogs page 
 router.get("/blog", function(req, res){
-    getFeaturedBlogs();
     Blog.find().sort({created: -1}).exec(function(err, blogs){
         if(err){
             console.log(err);
         } else {
-            res.render("blog", {blogs:blogs, featuredBlogs:featuredBlogsList, page_name:'blog'}); 
+            res.render("blog", {blogs:blogs, page_name:'blog'}); 
         }
     });    
 });
@@ -67,12 +57,10 @@ router.get("/blog/new", middleware.isAdmin, function(req, res){
 
 // Create new blog 
 router.post("/blog", middleware.isAdmin, upload.single('image'), function(req, res){
-    
     if(!req.file){
         //req.flash("error", "Please upload a file");
         res.redirect("back");
     }
-    
     //req.body.blog.body = req.sanitize(req.body.blog.body);
     cloudinary.uploader.upload(req.file.path, function(result) {
         // add cloudinary url for the image to the campground object under image property
@@ -102,7 +90,7 @@ router.post("/blog", middleware.isAdmin, upload.single('image'), function(req, r
     });
 });
 
-// SHOW Blog 
+// SHOW blog 
 router.get("/blog/:id", function(req, res){
     Blog.findById(req.params.id).populate("comments").exec(function(err, foundBlog){
       if(err){
@@ -145,16 +133,6 @@ router.put("/blog/:id", function(req, res){
         } else {
             res.redirect("/blog/" + req.params.id);
         }
-    });
-});
-
-// LIKE BLOG 
-router.post("/blog/:id/like", function(req, res){
-   Blog.update({_id: req.params.id}, {$inc: {likes: 1}}, {}, (err, numberAffected) => {
-        if(err){
-            console.log(err);
-        }    
-        res.send('Liked!');
     });
 });
 

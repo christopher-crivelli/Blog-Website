@@ -4,7 +4,9 @@ var passport    = require("passport");
 var Blog = require("../models/blog");
 var User = require("../models/user");
 var middleware = require("../middleware");
+var Category = require("../models/category");
 
+// Loads landing page 
 router.get("/", function(req, res){
     Blog.find().sort({created: -1}).exec(function(err, blogs){
         if(err){
@@ -15,10 +17,12 @@ router.get("/", function(req, res){
     });    
 });
 
+// Login page 
 router.get("/login", function(req, res){
     res.render("login", {page_name: "login"}); 
 });
 
+// Login route 
 router.post("/login", function(req, res){
     passport.authenticate('local', function(err, user, info) {
     if (err) {
@@ -38,6 +42,7 @@ router.post("/login", function(req, res){
   })(req, res);
 });
 
+// register route 
 router.post("/register", function(req,res){
     User.find({email: req.body.email.email}, function(err, foundUser){
         if(err){
@@ -62,6 +67,16 @@ router.post("/register", function(req,res){
             }); 
         }
     });
+});
+
+//Admin route 
+router.get("/admin", middleware.isAdmin, function(req, res){
+    Category.find().sort({name: 1}).exec(function(err, categories){
+        if(err){
+            console.log(err);
+        } 
+        res.render("admin", {categories:categories});
+    }); 
 });
 
 // LOGOUT ROUTE

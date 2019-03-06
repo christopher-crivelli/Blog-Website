@@ -5,6 +5,8 @@ var express     = require('express'),
     User        = require('../models/user'),
     middleware  = require('../middleware');
 
+
+// Post comment to a blog post 
 router.post("/", middleware.isLoggedIn, function(req, res){
     Blog.findById(req.params.id, function(err, blog){
         if(err){
@@ -14,7 +16,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
         } else {
             Comment.create(req.body.comment, function(err, comment){
                 if(err){
-                    // req.flash("error", "Error creating comment");
+                    req.flash("error", "Error creating comment");
                     res.redirect("/blog/" + blog._id);
                 } else if(req.body.comment.text.length === 0){
                     return res.redirect("back");

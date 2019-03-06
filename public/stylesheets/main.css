@@ -14,6 +14,7 @@ f77754 - Orange
 html, body {
     background: #fbf9f4;
     color: #3A001E;
+    height: 100%;
 }
 
 .ui.header {
@@ -56,8 +57,14 @@ nav {
 .wrapper {
     min-height: 100%;
     /*margin-bottom: -100px;*/
+    /*padding-bottom: 150px;*/
+    /*margin-bottom: -100px;*/
+}
+
+#main {
     padding-bottom: 150px;
-    margin-bottom: -100px;
+    margin: 0 auto -200px;
+    overflow: hidden;
 }
 
 /* BUTTONS */
@@ -462,6 +469,13 @@ nav .ui.secondary.menu .item:hover{
     color: #fff;
 }
 
+/* ADMIN */
+.ui.tag.label:hover {
+    background-color:#f78465 ;
+    color: #fff;
+}
+
+
 /* ANIMATIONS */
 .js--wp-2-content {
     opacity: 0;
@@ -484,8 +498,10 @@ nav .ui.secondary.menu .item:hover{
 
 .ui.footer { /* Increased specificity for SO snippet priority */
     width: 100%;
-    /*height: 100px;*/
-    /*margin-top: 25px;*/
+    position: relative;
+    clear: both;
+    padding-top: 20px;
+    height: 200px;
 }
 
 .ui.inverted.vertical.footer.segment {

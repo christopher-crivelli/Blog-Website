@@ -25,7 +25,7 @@ var indexRoutes = require("./routes/index"),
 // APP SETUP
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
-mongoose.connect("mongodb://kris:password1@ds129004.mlab.com:29004/portfolio", { useNewUrlParser: true });
+mongoose.connect(process.env.databaseURL, { useNewUrlParser: true });
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.locals.moment = require('moment');

@@ -1,4 +1,6 @@
-
+/*
+Used to create the social hover icons on the landing page
+*/
 $(document).ready(function() {
   var quadrantItems = document.querySelectorAll('.quadrant__item');
   var svgs = document.querySelectorAll('svg');
