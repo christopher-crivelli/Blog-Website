@@ -436,6 +436,10 @@ nav .ui.secondary.menu .item:hover{
     color: #2F4858;
 }
 
+.ui.reply.form {
+    margin-bottom: 25px;
+}
+
 /* NEW BLOG PAGE */
 #new-page {
     margin-top: 6em;
